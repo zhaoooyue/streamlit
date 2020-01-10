@@ -494,8 +494,7 @@ def _browser_server_address():
     """Internet address where users should point their browsers in order to
     connect to the app. Can be IP address or DNS name and path.
 
-    This is used to:
-    - Set the correct URL for CORS purposes.
+    This doesn't have much of an effect. This is only used in order to:
     - Show the URL on the terminal
     - Open the browser
     - Tell the browser where to connect to the server when in liveSave mode.
@@ -519,8 +518,7 @@ def _browser_server_port():
     """Port where users should point their browsers in order to connect to the
     app.
 
-    This is used to:
-    - Set the correct URL for CORS purposes.
+    This doesn't have much of an effect. This is only used in order to:
     - Show the URL on the terminal
     - Open the browser
     - Tell the browser where to connect to the server when in liveSave mode.
