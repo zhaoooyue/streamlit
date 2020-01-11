@@ -14,6 +14,7 @@
 
 import ast
 import sys
+from streamlit import compatibility
 
 
 def add_magic(code, script_path):
@@ -101,7 +102,10 @@ def _insert_import_statement(tree):
     # __future__ import".
     elif (
         len(tree.body) > 1
-        and (type(tree.body[0]) is ast.Expr and _is_docstring_node(tree.body[0].value))
+        and (
+            type(tree.body[0]) is ast.Expr and
+            _is_docstring_node(tree.body[0].value)
+        )
         and type(tree.body[1]) in (ast.ImportFrom, ast.Import)
     ):
         tree.body.insert(2, st_import)
@@ -175,6 +179,6 @@ def _get_st_write_from_expr(node, i, parent_type):
 
 def _is_docstring_node(node):
     if sys.version_info >= (3, 8, 0):
-        return type(node) is ast.Constant and type(node.value) is str  # type: ignore[attr-defined]
+        return type(node) is ast.Constant and type(node.value) is str
     else:
         return type(node) is ast.Str
