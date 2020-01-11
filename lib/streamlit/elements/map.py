@@ -26,6 +26,12 @@ import streamlit.elements.deck_gl_json_chart as deck_gl_json_chart
 _DEFAULT_MAP = dict(deck_gl_json_chart.EMPTY_MAP)  # type: Dict[str, Any]
 _DEFAULT_MAP["mapStyle"] = "mapbox://styles/mapbox/light-v10"
 
+import streamlit.elements.deck_gl_json_chart as deck_gl_json_chart
+
+# Map used as the basis for st.map.
+_DEFAULT_MAP = dict(deck_gl_json_chart.EMPTY_MAP)
+_DEFAULT_MAP["mapStyle"] = "mapbox://styles/mapbox/light-v10"
+
 # Other default parameters for st.map.
 _DEFAULT_COLOR = [200, 30, 0, 160]
 _ZOOM_LEVELS = [
@@ -122,7 +128,7 @@ def to_deckgl_json(data, zoom):
             {"lon": float(row[lon_col_index]), "lat": float(row[lat_col_index])}
         )
 
-    default = copy.deepcopy(_DEFAULT_MAP)
+    default = dict(_DEFAULT_MAP)
     default["initialViewState"]["latitude"] = center_lat
     default["initialViewState"]["longitude"] = center_lon
     default["initialViewState"]["zoom"] = zoom
