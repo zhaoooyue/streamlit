@@ -2717,25 +2717,15 @@ class DeltaGenerator(object):
         deck_gl.marshall(element.deck_gl_chart, spec, use_container_width, **kwargs)
 
     @_with_element
-    def pydeck_chart(self, element, pydeck_obj=None, use_container_width=False):
+    def pydeck_chart(self, element, pydeck_obj=None):
         """Draw a chart using the PyDeck library.
 
         This supports 3D maps, point clouds, and more! More info about PyDeck
         at https://deckgl.readthedocs.io/en/latest/.
 
         These docs are also quite useful:
-
-        - DeckGL docs: https://github.com/uber/deck.gl/tree/master/docs
-        - DeckGL JSON docs: https://github.com/uber/deck.gl/tree/master/modules/json
-
-        When using this command, we advise all users to use a personal Mapbox
-        token. This ensures the map tiles used in this chart are more
-        robust. You can do this with the mapbox.token config option.
-
-        To get a token for yourself, create an account at
-        https://mapbox.com. It's free! (for moderate usage levels) See
-        https://docs.streamlit.io/cli.html#view-all-config-options for more
-        info on how to set config options.
+            - [DeckGL docs](https://github.com/uber/deck.gl/tree/master/docs)
+            - [DeckGL JSON docs](https://github.com/uber/deck.gl/tree/master/modules/json)
 
         Parameters
         ----------
@@ -2750,7 +2740,6 @@ class DeltaGenerator(object):
         >>> df = pd.DataFrame(
         ...    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
         ...    columns=['lat', 'lon'])
-        >>>
         >>> st.pydeck_chart(pdk.Deck(
         ...     map_style='mapbox://styles/mapbox/light-v9',
         ...     initial_view_state=pdk.ViewState(
