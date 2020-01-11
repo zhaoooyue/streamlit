@@ -88,6 +88,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^5.5.0",
+    "@danmarshall/deckgl-typings": "^2.2.5",
     "@deck.gl/json": "^8.0.5",
     "@types/classnames": "^2.2.9",
     "@types/clipboard": "^2.0.1",
@@ -122,8 +123,7 @@
     "@types/xxhashjs": "^0.2.1",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
-    "axios-mock-adapter": "^1.17.0",
-    "cypress": "4.1.0",
+    "cypress": "^3.4.1",
     "cypress-file-upload": "^3.5.1",
     "cypress-image-snapshot": "^3.1.1",
     "enzyme": "^3.10.0",

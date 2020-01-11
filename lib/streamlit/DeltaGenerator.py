@@ -2708,7 +2708,8 @@ class DeltaGenerator(object):
             st.warning(
                 """
                 The `deck_gl_chart` widget is deprecated and will be removed on
-                2020-05-01. To render a map, you should use `st.pydeck_chart` widget.
+
+                2020-03-04. To render a map, you should use `st.pyDeckChart` widget.
             """
             )
 
@@ -2776,7 +2777,11 @@ class DeltaGenerator(object):
         """
         import streamlit.elements.deck_gl_json_chart as deck_gl_json_chart
 
-        deck_gl_json_chart.marshall(element, pydeck_obj, use_container_width)
+            spec = json.dumps(streamlit_map.DEFAULT_MAP)
+        else:
+            spec = pydeck_obj.to_json()
+
+        element.deck_gl_json_chart.json = spec
 
     @_with_element
     def table(self, element, data=None):

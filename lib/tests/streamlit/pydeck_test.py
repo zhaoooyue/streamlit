@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2018-2020 Streamlit Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,24 +13,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
+# Python 2/3 compatibility
+from __future__ import print_function, division, unicode_literals, absolute_import
+from streamlit.compatibility import setup_2_3_shims
+
+setup_2_3_shims(globals())
 
 from google.protobuf import json_format
 import pandas as pd
-import pydeck as pdk
+import json
 
 from tests import testutil
 import streamlit as st
-import streamlit.elements.deck_gl_json_chart as deck_gl_json_chart
+import pydeck as pdk
 
 df1 = pd.DataFrame({"lat": [1, 2, 3, 4], "lon": [10, 20, 30, 40]})
 
 
 class PyDeckTest(testutil.DeltaGeneratorTestCase):
+
     def test_basic(self):
         """Test that pydeck object orks."""
 
-        st.pydeck_chart(pdk.Deck(layers=[pdk.Layer("ScatterplotLayer", data=df1),]))
+        st.pydeck_chart(pdk.Deck(
+            layers=[
+                pdk.Layer("ScatterplotLayer", data=df1),
+            ]
+        ))
 
         el = self.get_delta_from_queue().new_element
         actual = json.loads(el.deck_gl_json_chart.json)
@@ -52,4 +62,4 @@ class PyDeckTest(testutil.DeltaGeneratorTestCase):
         el = self.get_delta_from_queue().new_element
         actual = json.loads(el.deck_gl_json_chart.json)
 
-        self.assertEqual(actual, deck_gl_json_chart.EMPTY_MAP)
+        self.assertTrue("layers" not in actual)
