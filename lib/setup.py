@@ -53,8 +53,8 @@ class VerifyVersionCommand(install):
 
 
 setuptools.setup(
-    name=NAME,
-    version=VERSION,
+    name="streamlit",
+    version="0.53.0",  # PEP-440
     description="Frontend library for machine learning engineers",
     long_description=readme(),
     url="https://streamlit.io",
