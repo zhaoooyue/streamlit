@@ -2723,8 +2723,9 @@ class DeltaGenerator(object):
         at https://deckgl.readthedocs.io/en/latest/.
 
         These docs are also quite useful:
-            - [DeckGL docs](https://github.com/uber/deck.gl/tree/master/docs)
-            - [DeckGL JSON docs](https://github.com/uber/deck.gl/tree/master/modules/json)
+
+        - DeckGL docs: https://github.com/uber/deck.gl/tree/master/docs
+        - DeckGL JSON docs: https://github.com/uber/deck.gl/tree/master/modules/json
 
         When using this command, we advise all users to use a personal Mapbox
         token. This ensures the map tiles used in this chart are more
@@ -2748,6 +2749,7 @@ class DeltaGenerator(object):
         >>> df = pd.DataFrame(
         ...    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
         ...    columns=['lat', 'lon'])
+        >>>
         >>> st.pydeck_chart(pdk.Deck(
         ...     map_style='mapbox://styles/mapbox/light-v9',
         ...     initial_view_state=pdk.ViewState(
