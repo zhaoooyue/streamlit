@@ -19,17 +19,7 @@ import React, { PureComponent, ReactNode } from "react"
 import DeckGL from "deck.gl"
 import Immutable from "immutable"
 import { StaticMap } from "react-map-gl"
-import * as layers from "@deck.gl/layers"
-import { JSONConverter } from "@deck.gl/json"
-import { flowRight as compose } from "lodash"
-import * as aggregationLayers from "@deck.gl/aggregation-layers"
-
-import { CSVLoader } from "@loaders.gl/csv"
-import { registerLoaders } from "@loaders.gl/core"
-
 import withFullScreenWrapper from "hocs/withFullScreenWrapper"
-import withMapboxToken from "hocs/withMapboxToken"
-
 import "mapbox-gl/dist/mapbox-gl.css"
 import "./DeckGlJsonChart.scss"
 
@@ -173,7 +163,4 @@ export class DeckGlJsonChart extends PureComponent<PropsWithHeight, State> {
   }
 }
 
-export default compose(
-  withMapboxToken,
-  withFullScreenWrapper
-)(DeckGlJsonChart)
+export default withFullScreenWrapper(DeckGlJsonChart)
