@@ -50,8 +50,16 @@ except ImportError:
     EXCLUDED_FILENAMES |= set(["empty_charts.py", "pyplot.py", "pyplot_kwargs.py"])
 
 # magic.py uses the async keyword, which is Python 3.6+
-if IS_PYTHON_2 or IS_PYTHON_3_5:
+if IS_PYTHON_2:
     EXCLUDED_FILENAMES.add("st_magic.py")
+
+# DEVNULL support
+try:
+    # Python 3
+    from subprocess import DEVNULL
+except ImportError:
+    # Python 2
+    DEVNULL = open(os.devnull, "wb")
 
 
 def _command_to_string(command):
