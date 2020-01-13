@@ -51,24 +51,6 @@ class StMapTest(testutil.DeltaGeneratorTestCase):
         self.assertEqual(c.get("initialViewState").get("pitch"), 0)
         self.assertEqual(c.get("layers")[0].get("@@type"), "ScatterplotLayer")
 
-    def test_default_map_copy(self):
-        """Test that _DEFAULT_MAP is not modified as other work occurs."""
-        self.assertEqual(_DEFAULT_MAP["initialViewState"]["latitude"], 0)
-
-        st.map(df1)
-        self.assertEqual(_DEFAULT_MAP["initialViewState"]["latitude"], 0)
-
-    def test_map_leak(self):
-        """Test that maps don't stay in memory when you create a new blank one.
-
-        This is testing for an actual (fixed) bug.
-        """
-        st.map(df1)
-        st.map()
-
-        c = self.get_delta_from_queue().new_element.deck_gl_json_chart
-        self.assertEqual(json.loads(c.json), _DEFAULT_MAP)
-
     def test_map_leak(self):
         """Test that maps don't stay in memory when you create a new blank one.
 
