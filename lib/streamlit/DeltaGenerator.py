@@ -346,20 +346,19 @@ class DeltaGenerator(object):
 
         if self._container and self._cursor:
             msg.metadata.parent_block.container = self._container
-            msg.metadata.parent_block.path[:] = self._cursor.path
-            msg.metadata.delta_id = self._cursor.index
-
+            msg.metadata.parent_block.path[:] = self._path
+            msg.metadata.delta_id = self._id
             if element_width is not None:
                 msg.metadata.element_dimension_spec.width = element_width
             if element_height is not None:
                 msg.metadata.element_dimension_spec.height = element_height
 
-            _enqueue_message(msg)
-            msg_was_enqueued = True
+        # "Null" delta generators (those without queues), don't send anything.
+        if self._enqueue is None:
+            return value_or_dg(rv, self)
 
-        if msg_was_enqueued:
-            # Get a DeltaGenerator that is locked to the current element
-            # position.
+        # Figure out if we need to create a new ID for this element.
+        if self._is_root:
             output_dg = DeltaGenerator(
                 container=self._container,
                 cursor=self._cursor.get_locked_cursor(
@@ -1130,10 +1129,6 @@ class DeltaGenerator(object):
             From now on you should set the height directly in the Graphviz
             spec. Please refer to the Graphviz documentation for details.
 
-        use_container_width : bool
-            If True, set the chart width to the column width. This takes
-            precedence over the figure's native `width` value.
-
         Example
         -------
 
@@ -1239,17 +1234,17 @@ class DeltaGenerator(object):
 
         width : int
             Deprecated. If != 0 (default), will show an alert.
-            From now on you should set the width directly in the figure.
-            Please refer to the Plotly documentation for details.
+            From now on you should set the width directly in the Altair
+            spec. Please refer to the Altair documentation for details.
 
         height : int
             Deprecated. If != 0 (default), will show an alert.
-            From now on you should set the height directly in the figure.
-            Please refer to the Plotly documentation for details.
+            From now on you should set the height directly in the Altair
+            spec. Please refer to the Altair documentation for details.
 
         use_container_width : bool
             If True, set the chart width to the column width. This takes
-            precedence over the figure's native `width` value.
+            precedence over Altair's native `width` value.
 
         sharing : {'streamlit', 'private', 'secret', 'public'}
             Use 'streamlit' to insert the plot and all its dependencies
