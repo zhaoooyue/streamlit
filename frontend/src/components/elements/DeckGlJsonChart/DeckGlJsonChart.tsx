@@ -20,23 +20,9 @@ import DeckGL from "deck.gl"
 import Immutable from "immutable"
 import { StaticMap } from "react-map-gl"
 import withFullScreenWrapper from "hocs/withFullScreenWrapper"
+
 import "mapbox-gl/dist/mapbox-gl.css"
 import "./DeckGlJsonChart.scss"
-
-interface PickingInfo {
-  object: {
-    [key: string]: string
-  }
-}
-
-interface DeckObject {
-  initialViewState: {
-    height: number
-    width: number
-  }
-  layers: Array<object>
-  mapStyle?: string | Array<string>
-}
 
 const configuration = {
   classes: { ...layers, ...aggregationLayers },
