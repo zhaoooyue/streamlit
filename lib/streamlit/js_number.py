@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2018-2020 Streamlit Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import numbers
-from typing import Optional, Union
+# Python 2/3 compatibility
+from __future__ import print_function, division, unicode_literals, absolute_import
+from streamlit.compatibility import setup_2_3_shims
+
+setup_2_3_shims(globals())
 
 
 class JSNumberBoundsException(Exception):
@@ -43,7 +47,7 @@ class JSNumber(object):
     MIN_NEGATIVE_VALUE = -MAX_VALUE
 
     @classmethod
-    def validate_int_bounds(cls, value: int, value_name: Optional[str] = None) -> None:
+    def validate_int_bounds(cls, value, value_name=None):
         """Validate that an int value can be represented with perfect precision
         by a JavaScript Number.
 
@@ -64,9 +68,9 @@ class JSNumber(object):
         if value_name is None:
             value_name = "value"
 
-        if not isinstance(value, numbers.Integral):
+        if not isinstance(value, int):
             raise JSNumberBoundsException("%s (%s) is not an int" % (value_name, value))
-        elif value < cls.MIN_SAFE_INTEGER:  # type: ignore[misc]
+        elif value < cls.MIN_SAFE_INTEGER:
             raise JSNumberBoundsException(
                 "%s (%s) must be >= -((1 << 53) - 1)" % (value_name, value)
             )
@@ -76,9 +80,7 @@ class JSNumber(object):
             )
 
     @classmethod
-    def validate_float_bounds(
-        cls, value: Union[int, float], value_name: Optional[str]
-    ) -> None:
+    def validate_float_bounds(cls, value, value_name):
         """Validate that a float value can be represented by a JavaScript Number.
 
         Parameters
@@ -98,7 +100,7 @@ class JSNumber(object):
         if value_name is None:
             value_name = "value"
 
-        if not isinstance(value, (numbers.Integral, float)):
+        if not isinstance(value, (int, float)):
             raise JSNumberBoundsException(
                 "%s (%s) is not a float" % (value_name, value)
             )

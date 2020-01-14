@@ -30,8 +30,6 @@ from streamlit import type_util
 from streamlit.ReportThread import get_report_ctx
 from streamlit.errors import DuplicateWidgetID
 from streamlit.errors import StreamlitAPIException
-from streamlit.errors import NoSessionContext
-from streamlit.file_util import get_encoded_file_data
 from streamlit.js_number import JSNumber
 from streamlit.js_number import JSNumberBoundsException
 from streamlit.proto import Alert_pb2
@@ -39,7 +37,9 @@ from streamlit.proto import Balloons_pb2
 from streamlit.proto import BlockPath_pb2
 from streamlit.proto import ForwardMsg_pb2
 from streamlit.proto.NumberInput_pb2 import NumberInput
-from streamlit.proto.TextInput_pb2 import TextInput
+
+
+# setup logging
 from streamlit.logger import get_logger
 
 LOGGER = get_logger(__name__)
@@ -2016,9 +2016,7 @@ class DeltaGenerator(object):
         return current_value if single_value else tuple(current_value)
 
     @_with_element
-    def file_uploader(
-        self, element, label, type=None, encoding="auto", key=None,
-    ):
+    def file_uploader(self, element, label, type=None, encoding="auto", key=None):
         """Display a file uploader widget.
 
         By default, uploaded files are limited to 200MB. You can configure
@@ -2693,18 +2691,19 @@ class DeltaGenerator(object):
            height: 530px
 
         """
-        # TODO: Add this in around 2020-01-31
-        #
-        # suppress_deprecation_warning = config.get_option(
-        #     "global.suppressDeprecationWarnings"
-        # )
-        # if not suppress_deprecation_warning:
-        #     import streamlit as st
-        #
-        #     st.warning("""
-        #         The `deck_gl_chart` widget is deprecated and will be removed on
-        #         2020-03-04. To render a map, you should use `st.pydeck_chart` widget.
-        #     """)
+        suppress_deprecation_warning = config.get_option(
+            "global.suppressDeprecationWarnings"
+        )
+        if not suppress_deprecation_warning:
+            import streamlit as st
+
+            st.warning(
+                """
+                The `deck_gl_chart` widget is deprecated and will be removed on
+
+                2020-03-04. To render a map, you should use `st.pyDeckChart` widget.
+            """
+            )
 
         import streamlit.elements.deck_gl as deck_gl
 
@@ -2744,7 +2743,6 @@ class DeltaGenerator(object):
         >>> df = pd.DataFrame(
         ...    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
         ...    columns=['lat', 'lon'])
-        >>>
         >>> st.pydeck_chart(pdk.Deck(
         ...     map_style='mapbox://styles/mapbox/light-v9',
         ...     initial_view_state=pdk.ViewState(
