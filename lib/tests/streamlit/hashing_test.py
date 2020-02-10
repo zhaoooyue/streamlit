@@ -29,21 +29,19 @@ import altair.vegalite.v3
 import numpy as np
 import pandas as pd
 import pytest
-from mock import patch, MagicMock
+from mock import MagicMock
 
 try:
     import tensorflow as tf
 except ImportError:
     pass
 
-from streamlit.hashing import InternalHashError
-from streamlit.hashing import UnhashableTypeError
-from streamlit.hashing import UserHashError
-from streamlit.hashing import _CodeHasher
-from streamlit.hashing import _NP_SIZE_LARGE
-from streamlit.hashing import _PANDAS_ROWS_LARGE
+import streamlit as st
+from streamlit.errors import UnhashableType
 from streamlit.util import functools_wraps
 import streamlit as st
+
+from tests import testutil
 
 from tests import testutil
 
@@ -321,15 +319,7 @@ class HashTest(unittest.TestCase):
         self.assertNotEqual(get_hash(MagicMock()), get_hash(MagicMock()))
 
     @testutil.requires_tensorflow
-    def test_tensorflow_session(self):
-        tf_config = tf.compat.v1.ConfigProto()
-        tf_session = tf.compat.v1.Session(config=tf_config)
-        self.assertEqual(get_hash(tf_session), get_hash(tf_session))
-
-        tf_session2 = tf.compat.v1.Session(config=tf_config)
-        self.assertNotEqual(get_hash(tf_session), get_hash(tf_session2))
-
-    def test_non_hashable(self):
+    def test_tensorflow_non_hashable(self):
         """Test user provided hash functions."""
 
         g = (x for x in range(1))
@@ -780,7 +770,8 @@ class CodeHashTest(unittest.TestCase):
         # contains the name of the function in the closure.
         # self.assertEqual(get_hash(f), get_hash(h))
 
-    def test_non_hashable(self):
+    @testutil.requires_tensorflow
+    def test_tensorflow_non_hashable(self):
         """Test the hash of functions that return non hashable objects."""
 
         gen = (x for x in range(1))

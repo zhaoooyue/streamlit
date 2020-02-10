@@ -50,7 +50,7 @@ except ImportError:
     EXCLUDED_FILENAMES |= set(["empty_charts.py", "pyplot.py", "pyplot_kwargs.py"])
 
 # magic.py uses the async keyword, which is Python 3.6+
-if IS_PYTHON_2:
+if IS_PYTHON_2 or IS_PYTHON_3_5:
     EXCLUDED_FILENAMES.add("st_magic.py")
 
 # DEVNULL support
