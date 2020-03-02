@@ -590,7 +590,7 @@ def get_url():
     this should just return the url that the current session is running on
     """
     ctx = _get_report_ctx()
-    session_infos = Server.get_current()._session_infos
+    session_infos = Server.get_current()._session_info_by_id
     for socket_handler, session_info in session_infos.items():
         if session_info.session.enqueue == ctx.enqueue:
             session = session_info.session
@@ -605,7 +605,7 @@ def set_url(url_to_set):
     this should just append/replace url_to_set to the current session's existing hostname.
     """
     ctx = _get_report_ctx()
-    session_infos = Server.get_current()._session_infos
+    session_infos = Server.get_current()._session_info_by_id
     for socket_handler, session_info in session_infos.items():
         if session_info.session.enqueue == ctx.enqueue:
             session = session_info.session
