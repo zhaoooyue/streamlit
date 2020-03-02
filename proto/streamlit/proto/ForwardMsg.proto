@@ -72,6 +72,12 @@ message ForwardMsg {
     // for this one. If the client does not have the referenced message
     // in its cache, it can retrieve it from the server.
     string ref_hash = 11;
+
+    // new_url for curious users to set params
+    string new_url = 12;
+
+    // get_url for curious users to use in Streamlit
+    bool get_url = 13;
   }
 }
 

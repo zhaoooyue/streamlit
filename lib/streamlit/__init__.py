@@ -122,6 +122,9 @@ from streamlit.errors import StreamlitAPIException
 from streamlit.proto import BlockPath_pb2 as _BlockPath_pb2
 from streamlit.util import functools_wraps as _functools_wraps
 
+from streamlit.server.Server import Server
+from streamlit.proto.ForwardMsg_pb2 import ForwardMsg
+
 # Modules that the user should have access to.
 from streamlit.caching import cache  # noqa: F401
 
@@ -605,6 +608,35 @@ def _transparent_write(*args):
     if len(args) == 1:
         return args[0]
     return args
+
+def get_url():
+    """
+    this should just return the url that the current session is running on
+    """
+    ctx = _get_report_ctx()
+    session_infos = Server.get_current()._session_infos
+    for socket_handler, session_info in session_infos.items():
+        if session_info.session.enqueue == ctx.enqueue:
+            session = session_info.session
+            if not session.base_url:
+                raise StreamlitAPIException("Something is wrong when fetching current browser URL. Please try again.")
+            else:    
+                return session.base_url + str(session.query_url)
+
+
+def set_url(url_to_set):
+    """
+    this should just append/replace url_to_set to the current session's existing hostname.
+    """
+    ctx = _get_report_ctx()
+    session_infos = Server.get_current()._session_infos
+    for socket_handler, session_info in session_infos.items():
+        if session_info.session.enqueue == ctx.enqueue:
+            session = session_info.session
+            newUrlMsg = ForwardMsg()
+            newUrlMsg.new_url = url_to_set
+            session._report.enqueue(newUrlMsg)
+            session.query_url = url_to_set
 
 
 # We want to show a warning when the user runs a Streamlit script without

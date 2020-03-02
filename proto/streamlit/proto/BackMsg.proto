@@ -88,5 +88,8 @@ message BackMsg {
 
     // Delete uploaded file
     DeleteUploadedFile delete_uploaded_file = 13;
+
+    // Request to pass current URL to backend
+    string url_info = 14;
   }
 }
