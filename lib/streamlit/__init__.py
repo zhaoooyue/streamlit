@@ -597,7 +597,7 @@ def get_url():
             if not session.base_url:
                 raise StreamlitAPIException("Something is wrong when fetching current browser URL. Please try again.")
             else:    
-                return session.base_url + str(session.query_url)
+                return session.base_url
 
 
 def set_url(url_to_set):
@@ -612,7 +612,6 @@ def set_url(url_to_set):
             newUrlMsg = ForwardMsg()
             newUrlMsg.new_url = url_to_set
             session._report.enqueue(newUrlMsg)
-            session.query_url = url_to_set
 
 
 # We want to show a warning when the user runs a Streamlit script without

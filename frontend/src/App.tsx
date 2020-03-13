@@ -136,8 +136,13 @@ export class App extends PureComponent<Props, State> {
     this.statusWidgetRef = React.createRef<StatusWidget>()
     this.connectionManager = null
     this.widgetMgr = new WidgetStateManager((msg: IBackMsg) => {
+      // alert(JSON.stringify(msg))
       this.sendBackMsg(new BackMsg(msg))
+      const backMsg = new BackMsg({ urlInfo: window.location.href })
+      backMsg.type = "urlInfo"
+      this.sendBackMsg(backMsg)
     })
+
     this.uploadClient = new FileUploadClient(() => {
       return this.connectionManager
         ? this.connectionManager.getBaseUriParts()
@@ -340,11 +345,6 @@ export class App extends PureComponent<Props, State> {
     })
 
     this.handleSessionStateChanged(sessionState)
-
-    // send current URL to server
-    const backMsg = new BackMsg({ urlInfo: window.location.href })
-    backMsg.type = "urlInfo"
-    this.sendBackMsg(backMsg)
   }
 
   /**
