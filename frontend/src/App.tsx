@@ -466,6 +466,9 @@ export class App extends PureComponent<Props, State> {
    */
   handleNewUrlChange = (newUrl: string): void => {
     window.history.pushState({}, "", newUrl)
+    if (window.parent) {
+      window.parent.history.pushState({}, "", newUrl)
+    }
   }
 
   /**
