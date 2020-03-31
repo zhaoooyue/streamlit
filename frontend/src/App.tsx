@@ -465,7 +465,7 @@ export class App extends PureComponent<Props, State> {
    * @param newUrl string
    */
   handleNewUrlChange = (newUrl: string): void => {
-    window.history.pushState({}, "", newUrl)
+    window.history.pushState({}, "", newUrl ? newUrl : "/")
   }
 
   /**
