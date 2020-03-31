@@ -581,7 +581,8 @@ def _transparent_write(*args):
         return args[0]
     return args
 
-def get_url():
+
+def _get_url():
     """
     this should just return the url that the current session is running on
     """
@@ -591,12 +592,14 @@ def get_url():
         if session_info.session.enqueue == ctx.enqueue:
             session = session_info.session
             if not session.base_url:
-                raise StreamlitAPIException("Something is wrong when fetching current browser URL. Please try again.")
-            else:    
+                raise StreamlitAPIException(
+                    "Something is wrong when fetching current browser URL. Please try again."
+                )
+            else:
                 return session.base_url + str(session.query_url)
 
 
-def set_url(url_to_set):
+def _set_url(url_to_set):
     """
     this should just append/replace url_to_set to the current session's existing hostname.
     """
@@ -724,6 +727,9 @@ class _ExperimentalNamespace(object):
     # Add experimental features here. For example:
     # foo = _foo
     show = _show
+    get_url = _get_url
+    set_url = _set_url
+
 
 
 beta = _BetaNamespace
