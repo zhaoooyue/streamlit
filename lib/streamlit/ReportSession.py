@@ -103,6 +103,8 @@ class ReportSession(object):
         self._script_request_queue = ScriptRequestQueue()
 
         self._scriptrunner = None
+        self.base_url = None
+        self.query_url = ""
 
         LOGGER.debug("ReportSession initialized (id=%s)", self.id)
 

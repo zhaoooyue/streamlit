@@ -102,6 +102,8 @@ from streamlit import type_util as _type_util
 from streamlit.DeltaGenerator import DeltaGenerator as _DeltaGenerator
 from streamlit.ReportThread import add_report_ctx as _add_report_ctx
 from streamlit.ReportThread import get_report_ctx as _get_report_ctx
+from streamlit.server.Server import Server
+from streamlit.proto.ForwardMsg_pb2 import ForwardMsg
 from streamlit.errors import StreamlitAPIException
 from streamlit.proto import BlockPath_pb2 as _BlockPath_pb2
 from streamlit.util import functools_wraps as _functools_wraps
@@ -580,6 +582,38 @@ def _transparent_write(*args):
     return args
 
 
+def _get_url():
+    """
+    this should just return the url that the current session is running on
+    """
+    ctx = _get_report_ctx()
+    session_infos = Server.get_current()._session_info_by_id
+    for socket_handler, session_info in session_infos.items():
+        if session_info.session.enqueue == ctx.enqueue:
+            session = session_info.session
+            if not session.base_url:
+                raise StreamlitAPIException(
+                    "Something is wrong when fetching current browser URL. Please try again."
+                )
+            else:
+                return session.base_url + str(session.query_url)
+
+
+def _set_url(url_to_set):
+    """
+    this should just append/replace url_to_set to the current session's existing hostname.
+    """
+    ctx = _get_report_ctx()
+    session_infos = Server.get_current()._session_info_by_id
+    for socket_handler, session_info in session_infos.items():
+        if session_info.session.enqueue == ctx.enqueue:
+            session = session_info.session
+            newUrlMsg = ForwardMsg()
+            newUrlMsg.new_url = url_to_set
+            session._report.enqueue(newUrlMsg)
+            session.query_url = url_to_set
+
+
 # We want to show a warning when the user runs a Streamlit script without
 # 'streamlit run', but we need to make sure the warning appears only once no
 # matter how many times __init__ gets loaded.
@@ -693,6 +727,9 @@ class _ExperimentalNamespace(object):
     # Add experimental features here. For example:
     # foo = _foo
     show = _show
+    get_url = _get_url
+    set_url = _set_url
+
 
 
 beta = _BetaNamespace

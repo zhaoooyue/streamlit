@@ -260,6 +260,7 @@ export class App extends PureComponent<Props, State> {
         uploadReportProgress: (progress: string | number) =>
           this.handleUploadReportProgress(progress),
         reportUploaded: (url: string) => this.handleReportUploaded(url),
+        newUrl: (new_url: string) => this.handleNewUrlChange(new_url),
       })
     } catch (err) {
       logError(err)
@@ -339,6 +340,11 @@ export class App extends PureComponent<Props, State> {
     })
 
     this.handleSessionStateChanged(sessionState)
+
+    // send current URL to server
+    const backMsg = new BackMsg({ urlInfo: window.location.href })
+    backMsg.type = "urlInfo"
+    this.sendBackMsg(backMsg)
   }
 
   /**
@@ -452,6 +458,14 @@ export class App extends PureComponent<Props, State> {
     } else {
       this.clearAppState(newReportHash, reportId, reportName)
     }
+  }
+
+  /**
+   * Handler for ForwardMsg.newUrl messages
+   * @param newUrl string
+   */
+  handleNewUrlChange = (newUrl: string): void => {
+    window.history.pushState({}, "", newUrl ? newUrl : "/")
   }
 
   /**
