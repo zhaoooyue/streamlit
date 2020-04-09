@@ -110,13 +110,7 @@ function aboutDialog(props: AboutProps): ReactElement {
     <BasicDialog onClose={props.onClose}>
       <ModalHeader toggle={props.onClose}>About</ModalHeader>
       <ModalBody>
-        <div>
-          Streamlit v{SessionInfo.current.streamlitVersion}
-          <br />
-          <a href="https://streamlit.io">https://streamlit.io</a>
-          <br />
-          Copyright 2020 Streamlit Inc. All rights reserved.
-        </div>
+        <div>Built with ❤ by Project Team 33 from CSE6242</div>
       </ModalBody>
       <ModalFooter>
         <Button outline color="primary" onClick={props.onClose}>

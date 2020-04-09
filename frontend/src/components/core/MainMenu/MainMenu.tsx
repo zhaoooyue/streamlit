@@ -112,20 +112,20 @@ class MainMenu extends PureComponent<Props, State> {
             <span className="shortcut">R</span>
           </DropdownItem>
 
-          <DropdownItem
+          {/* <DropdownItem
             disabled={isServerDisconnected}
             onClick={this.props.clearCacheCallback}
           >
             <span>Clear cache</span>
             <span className="shortcut">C</span>
-          </DropdownItem>
+          </DropdownItem> */}
 
           <DropdownItem divider />
 
-          <ScreencastOption
+          {/* <ScreencastOption
             screenCastState={this.props.screenCastState}
             onClick={this.props.screencastCallback}
-          />
+          /> */}
 
           {/* We hide 'Share Report' + divider if sharing is not configured */}
           {this.props.sharingEnabled && (
@@ -137,31 +137,28 @@ class MainMenu extends PureComponent<Props, State> {
             </DropdownItem>
           )}
 
-          <DropdownItem divider />
-
-          <DropdownItem
+          {/* <DropdownItem
             onClick={this.getOpenInWindowCallback(ONLINE_DOCS_URL)}
           >
             Documentation
-          </DropdownItem>
+          </DropdownItem> */}
 
-          <DropdownItem onClick={this.getOpenInWindowCallback(COMMUNITY_URL)}>
+          {/* <DropdownItem onClick={this.getOpenInWindowCallback(COMMUNITY_URL)}>
             Ask a question
-          </DropdownItem>
+          </DropdownItem> */}
 
-          <DropdownItem onClick={this.getOpenInWindowCallback(BUG_URL)}>
+          {/* <DropdownItem onClick={this.getOpenInWindowCallback(BUG_URL)}>
             Report a bug
-          </DropdownItem>
+          </DropdownItem> */}
 
-          <DropdownItem divider />
-
+          {/* 
           <DropdownItem onClick={this.getOpenInWindowCallback(TEAMS_URL)}>
             Streamlit for teams
-          </DropdownItem>
+          </DropdownItem>  */}
 
-          <DropdownItem onClick={this.props.settingsCallback}>
+          {/* <DropdownItem onClick={this.props.settingsCallback}>
             Settings
-          </DropdownItem>
+          </DropdownItem> */}
 
           <DropdownItem onClick={this.props.aboutCallback}>About</DropdownItem>
         </DropdownMenu>
