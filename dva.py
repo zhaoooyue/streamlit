@@ -26,3 +26,4 @@ chart_data = pd.DataFrame(
 
 st.info("Accuracy vs Iterations")
 st.line_chart(chart_data)
+
