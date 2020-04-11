@@ -1,0 +1,6 @@
+{
+  "train_auc": 0.9795941121876361,
+  "test_auc": 0.9467723443300443,
+  "sampling": [["minority", "200"], ["majority", 15]],
+  "feature_importance": []
+}

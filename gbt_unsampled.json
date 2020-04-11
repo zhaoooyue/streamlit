@@ -1,0 +1,17 @@
+{
+  "train_auc": 0.9542802880388085,
+  "test_auc": 0.9544682143340896,
+  "sampling": "unsampled",
+  "feature_importance": [
+    ["Balance", 0.4425197936812883],
+    ["Number of transactions made", 0.2332798795350886],
+    ["Credit limit of customer", 0.1754665620163936],
+    ["Number of international transactions made", 0.04922676018282298],
+    ["Gender", 0.04543739732296217],
+    ["State of California", 0.02413956072655422],
+    ["State of Guam", 0.011343518200373898],
+    ["State of North Carolina", 0.00630901186466389],
+    ["State of Georgia", 0.00625001704349378],
+    ["State of Virginia", 0.001749671539503934]
+  ]
+}
