@@ -166,6 +166,40 @@ elif selection == "Visualization":
             f"""
             ## Analyzing `{option}` algorithm
 
-            Work in Progress by ZY....
+            A random forest is a meta estimator that fits a number of `decision tree` classifiers on various sub-samples of the dataset and uses averaging to improve the predictive accuracy and control over-fitting.
             """
         )
+        with open("rf.json") as f:
+            rf = json.load(f)
+
+            show_accuracy = st.checkbox("Display training/testing accuracy")
+            if show_accuracy:
+                training_accuracy = rf["train_auc"] * 100
+                testing_accuracy = rf["test_auc"] * 100
+                train_iteration = st.empty()
+                bar = st.progress(0)
+                for i in range(int(training_accuracy)):
+                    train_iteration.text(f"Training Accuracy: {(i+1)}%")
+                    bar.progress(i + 1)
+                    time.sleep(0.05)
+
+                test_iteration = st.empty()
+                bar2 = st.progress(0)
+                for i in range(int(testing_accuracy)):
+                    test_iteration.text(f"Testing Accuracy: {(i+1)}%")
+                    bar2.progress(i + 1)
+                    time.sleep(0.05)
+
+            st.info(
+                "We can analyze which features are more important to contribute to this testing accuracy!"
+            )
+            count = st.slider(
+                "What are the top N features?", 0, 6, 0, key="slider"
+            )
+            rf_real = sorted(rf["feature_importance"], key=itemgetter(1), reverse=True)
+            if count > 0:
+                df = pd.DataFrame(
+                    rf_real[:count],
+                    columns=(["Feature Name", "Feature Importance"]),
+                )
+                st.dataframe(df)

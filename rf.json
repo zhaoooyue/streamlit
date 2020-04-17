@@ -1,0 +1,13 @@
+{
+  "train_auc": 0.928024372179054,
+  "test_auc": 0.9278177392284357,
+  "feature_importance": [
+    ["balance", 0.5561884377756081],
+    ["Credit Line", 0.3062830069402318],
+    ["Number of Transactions", 0.13318206636126656],
+    ["Gender", 0.0025138404249500233],
+    ["State", 0.0015666305368283642],
+    ["Number of International Transactions", 0.0002660179611151091]
+  ],
+  "sampling": ["unsampled", 0]
+}
