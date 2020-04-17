@@ -33,7 +33,6 @@ import {
 } from "components/core/StreamlitDialog/ScriptChangedDialog"
 import { IException } from "autogen/proto"
 import { Props as SettingsDialogProps, SettingsDialog } from "./SettingsDialog"
-import { SessionInfo } from "lib/SessionInfo"
 
 import "./StreamlitDialog.scss"
 

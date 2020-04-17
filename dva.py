@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 import json
 import time
-
+from operator import itemgetter
+import copy
 
 PAGES = {"Home": "", "Visualization": ""}
 
@@ -122,9 +123,43 @@ elif selection == "Visualization":
             f"""
             ## Analyzing `{option}` algorithm
 
-            Work in Progress by ZY....
+            Logistic regression is the appropriate regression analysis to conduct when the dependent variable is dichotomous (binary). Like all regression analyses, the logistic regression is a `predictive analysis`.  
             """
         )
+        with open("lr.json") as f:
+            lr = json.load(f)
+
+            show_accuracy = st.checkbox("Display training/testing accuracy")
+            if show_accuracy:
+                training_accuracy = lr["train_auc"] * 100
+                testing_accuracy = lr["test_auc"] * 100
+                train_iteration = st.empty()
+                bar = st.progress(0)
+                for i in range(int(training_accuracy)):
+                    train_iteration.text(f"Training Accuracy: {(i+1)}%")
+                    bar.progress(i + 1)
+                    time.sleep(0.05)
+
+                test_iteration = st.empty()
+                bar2 = st.progress(0)
+                for i in range(int(testing_accuracy)):
+                    test_iteration.text(f"Testing Accuracy: {(i+1)}%")
+                    bar2.progress(i + 1)
+                    time.sleep(0.05)
+
+            st.info(
+                "We can analyze which features are more important to contribute to this testing accuracy!"
+            )
+            count = st.slider(
+                "What are the top N features?", 0, 11, 0, key="slider"
+            )
+            lr_real = sorted(lr["feature_importance"], key=itemgetter(1), reverse=True)
+            if count > 0:
+                df = pd.DataFrame(
+                    lr_real[:count],
+                    columns=(["Feature Name", "Feature Importance"]),
+                )
+                st.dataframe(df)
 
     elif option == "Random Forest":
         st.markdown(
